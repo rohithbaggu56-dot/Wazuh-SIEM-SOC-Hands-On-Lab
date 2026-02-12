@@ -86,19 +86,32 @@ This lab strengthened a SOC analyst mindset:
 
 ---
 
-## 📂 Evidence (Screenshots)
+## 🧪 Lab Evidence & Observations
 
 ### 1️⃣. Active agents (Windows & Linux)
+Shows active Windows and Linux agents successfully connected to the Wazuh manager.
   
   <img width="1920" height="1079" alt="Screenshot 2026-02-10 111414" src="https://github.com/user-attachments/assets/91a57329-98d1-4a25-8e4a-e364a381e734" />
 
-### 2️⃣. Threat Hunting events (PAM, sudo, rootcheck)
+### 2️⃣. Threat Hunting: Authentication, Privilege & File Activity
+ shows correlated endpoint activity captured in the Threat Hunting view of Wazuh for a Kali Linux and Windows agent.
+
+Observed events include:
+- PAM login session opened and closed
+- Successful sudo execution to ROOT
+- File deletion detected via File Integrity Monitoring (syscheck)
+- Rootcheck (host-based anomaly detection) events
+- Agent start and stop events
+
+These events appear together because Wazuh correlates authentication, privilege escalation, and file system activity by agent and time window. This reflects how SOC analysts investigate real incidents by reviewing all related actions around a single endpoint rather than isolated event types.
+
   
   <img width="1920" height="1080" alt="Screenshot 2026-02-10 133155" src="https://github.com/user-attachments/assets/36d08b03-a837-440e-985f-c3287915dcc7" />
   
   <img width="1920" height="1080" alt="Screenshot 2026-02-10 131410" src="https://github.com/user-attachments/assets/033d3173-dbe0-47c2-9ede-c615bbb8e42e" />
 
 ### 3️⃣. File Integrity Monitoring alerts
+Shows file creation, modification, and deletion events on Windows, highlighting OS behavior differences.
 
   <img width="1920" height="1080" alt="Screenshot 2026-02-10 133116" src="https://github.com/user-attachments/assets/e52e8dbb-dbe4-4e9d-adb1-4b7914e24fd7" />
   
@@ -106,14 +119,6 @@ This lab strengthened a SOC analyst mindset:
 
 > IP addresses are masked in screenshots as a security best practice.
 
----
-
-## 🚀 Next Steps
-
-- Build custom detection use cases
-- Improve threat hunting queries
-- Document rule logic and alert tuning
-- Expand lab with additional Linux distributions
 
 ---
 🔗 **Navigation**  
