@@ -166,5 +166,5 @@ Shows file creation, modification, and deletion events on Windows, highlighting 
 
 ---
 🔗 **Navigation**  
-⬅️ [Back to SOC-Home-Lab-BlueTeam](https://github.com/rohithbaggu56-dot/SOC-Home-Lab-BlueTeam))
+⬅️ [Back to Portfolio](https://github.com/rohithbaggu56-dot)
 ---
