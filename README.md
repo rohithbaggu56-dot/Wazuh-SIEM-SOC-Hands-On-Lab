@@ -1,92 +1,125 @@
-# 🔐Wazuh SIEM – Hands-On SOC Lab (Windows & Linux)
+# 🛡️ Wazuh SIEM – SOC Monitoring & Endpoint Detection Lab
 
-> ⚠️ **Disclaimer**  
-> This repository is created strictly for educational and defensive security learning purposes.  
-> All activities were performed in a controlled lab environment. No malicious activity was conducted or encouraged.
+A hands-on Security Operations Center (SOC) monitoring environment built to understand how endpoint detection, firewall monitoring, and log analysis work together in a real-world defensive setup.
+
+This lab focuses on **blue team operations**, simulating how analysts monitor endpoints behind a firewall, investigate alerts, and validate suspicious activity using Wazuh.
 
 
-This repository documents my hands-on work with Wazuh, focused on understanding how endpoint detection and monitoring actually work in a real SOC-style environment.
+## 🎯 Project Summary
 
-This is not a step-by-step installation guide.
-Instead, it represents a practical lab where I generated real system activity (file creation, modification, deletion, authentication events), encountered detection gaps, and resolved them through configuration changes, troubleshooting, and log analysis.
+This project demonstrates deployment of a host-based detection system inside a controlled SOC network protected by a firewall.
 
-The goal of this lab was to move beyond dashboards and understand why alerts appear, why they sometimes don’t, and how SOC analysts investigate those gaps.
+The environment was designed to simulate enterprise monitoring where endpoints generate security telemetry analyzed by a centralized detection platform.
 
----
+The goal was **defensive monitoring and investigation**, not penetration testing.
 
-## 🧪 Lab Overview
 
-**SIEM Platform**
-- Wazuh Manager & Dashboard (Ubuntu)
+## 📌 Project Scope
 
-**Monitored Endpoints**
-- Windows 10
-- Kali Linux
+This lab focuses on:
 
-**Monitoring Focus**
+- Endpoint monitoring and alert detection  
+- Firewall-controlled network segmentation  
+- Linux & Windows log visibility  
 - File Integrity Monitoring (FIM)
-- Authentication & PAM events
-- Privilege escalation (sudo)
-- Agent behavior and log visibility
-- Threat Hunting vs Discover analysis
+- Threat Hunting (TH) 
+- Authentication event monitoring  
+- SOC investigation workflow understanding  
 
 ---
 
-## ⚙️ What Was Tested in This Lab
+## 🏗️ Lab Architecture
 
-To validate detections, I intentionally performed real actions on endpoints:
+### Network Flow
+<img width="1024" height="713" alt="Wazuh_lab_setup" src="https://github.com/user-attachments/assets/4f3bd58e-3a6b-48ef-82f7-7db1667ef7f6" />
 
-- File creation
-- File modification
-- File deletion
-- Linux user login/logout (PAM)
-- `sudo` privilege escalation
-- Agent start / stop events
 
-These actions were used to confirm whether Wazuh was:
-- Collecting logs correctly
-- Indexing events properly
-- Triggering the expected rules and alert levels
+### Components
+
+**pfSense Firewall**
+- Controls internal SOC network traffic
+- Provides network segmentation
+- Simulates enterprise perimeter defense
+
+**Wazuh Server**
+- Centralized log collection
+- Alert correlation engine
+- Endpoint monitoring platform
+
+**Endpoints**
+- Windows VM generating security events
+- Linux systems producing authentication logs
+- Kali Linux used for activity simulation
+
+
+## ⚙️ Wazuh Implementation
+
+The Wazuh platform was deployed to monitor endpoint behavior and detect suspicious system activities.
+
+### Configured Features
+
+- Agent enrollment and monitoring
+- File Integrity Monitoring (FIM)
+- Threat Hunting (TH)
+- Authentication log analysis
+- Privilege escalation monitoring
+- Security event alerting
+
+Configuration tuning performed using:
+
+- `ossec.conf`
+- Agent configuration policies
+- Log source adjustments
+
+
+## 🧪 Activity Simulation & Detection Testing
+
+To validate detection visibility, multiple system activities were performed:
+
+- File creation and deletion events
+- Unauthorized file modification attempts
+- Linux sudo privilege escalation
+- Authentication attempts monitoring
+- Agent communication verification
+
+These actions generated alerts analyzed from an analyst perspective.
+
+
+## 🔎 SOC Investigation Approach
+
+Each alert was reviewed using a structured workflow:
+
+1. Identify triggered rule
+2. Review event source
+3. Validate user activity
+4. Analyze timestamps and behavior
+5. Determine normal vs suspicious activity
+6. Document findings
+
+This helped understand **why alerts exist**, not just how they appear.
+
+
+## 🧭 Detection Visibility Learned
+
+The lab helped demonstrate how:
+
+- Endpoint logs reveal attacker behavior
+- Privilege escalation attempts appear in telemetry
+- File integrity monitoring detects unauthorized changes
+- Authentication anomalies become investigation starting points
+
+
+## 🧠 SOC Analyst Skills Practiced
+
+- Endpoint detection monitoring
+- Alert triage and validation
+- Linux & Windows log investigation
+- Detection rule understanding
+- Security event correlation
+- Defensive analysis mindset
 
 ---
-
-## 🔧 Configuration-Level Work
-
-A major part of this lab involved working directly with configuration files.
-
-Key areas:
-- Editing `ossec.conf`
-- Enabling and tuning **syscheck (FIM)**
-- Verifying monitored directories
-- Restarting agents and manager services
-- Validating whether config changes reflected in alerts
-
-This helped me understand why some logs appeared in **Discover** but not in **Threat Hunting**, and how configuration directly affects visibility.
-
----
-
-## 🔍 Observations & Learnings
-
-- File deletion events triggered **high-level alerts (Level 7)** on both Linux and Windows
-- Windows generated significantly more FIM events due to OS behavior
-- Kali Linux showed fewer vulnerabilities compared to Windows
-- No alerts does not mean no activity
-- SIEM effectiveness depends more on **configuration than dashboards**
-
----
-
-## 🧠 SOC Analyst Takeaways
-
-This lab strengthened a SOC analyst mindset:
-
-- Why is an expected alert missing?
-- Is the issue with log generation, collection, or indexing?
-- Is the behavior normal OS activity or suspicious?
-- How do different operating systems behave under the same monitoring rules?
-
----
-
-## 🧪 Lab Evidence & Observations
+## 📸 Lab Screenshots
 
 ### 1️⃣. Active agents (Windows & Linux)
 Shows active Windows and Linux agents successfully connected to the Wazuh manager.
@@ -119,8 +152,20 @@ Shows file creation, modification, and deletion events on Windows, highlighting 
 
 > IP addresses are masked in screenshots as a security best practice.
 
+---
+
+## 🧠 Key Takeaways
+
+- Learned how endpoint detection works inside a monitored SOC network rather than as a standalone tool.
+- Understood how firewall segmentation (pfSense) improves visibility and security monitoring.
+- Gained practical experience analyzing Linux and Windows security events from an analyst perspective.
+- Observed how attacker behavior appears through authentication logs, file changes, and privilege escalation events.
+- Developed alert triage skills by validating whether alerts represent normal activity or suspicious behavior.
+- Understood the importance of centralized logging for incident investigation and detection workflows.
+- Improved understanding of how SOC analysts investigate alerts step-by-step instead of relying only on tools.
+- Learned how detection rules help identify abnormal system behavior early in the attack lifecycle.
 
 ---
 🔗 **Navigation**  
-⬅️ [Back to Portfolio](https://github.com/rohithbaggu56-dot)
+⬅️ [Back to SOC-Home-Lab-BlueTeam](https://github.com/rohithbaggu56-dot/SOC-Home-Lab-BlueTeam))
 ---
