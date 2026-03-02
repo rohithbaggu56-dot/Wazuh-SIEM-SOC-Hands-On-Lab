@@ -150,7 +150,6 @@ Shows file creation, modification, and deletion events on Windows, highlighting 
   
   <img width="1920" height="1080" alt="Screenshot 2026-02-10 131644" src="https://github.com/user-attachments/assets/2c4600d0-98f4-438b-8b72-2d7089248c37" />
 
-> IP addresses are masked in screenshots as a security best practice.
 
 ---
 
