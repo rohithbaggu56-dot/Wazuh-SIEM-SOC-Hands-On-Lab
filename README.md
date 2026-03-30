@@ -1,170 +1,141 @@
-# 🛡️ Wazuh SIEM – SOC Monitoring & Endpoint Detection Lab
+# 🔐 Wazuh SIEM – Hands-On SOC Lab (Windows & Linux)
 
-A hands-on Security Operations Center (SOC) monitoring environment built to understand how endpoint detection, firewall monitoring, and log analysis work together in a real-world defensive setup.
+![Wazuh](https://img.shields.io/badge/Wazuh-005DAC?style=for-the-badge&logo=wazuh&logoColor=white)
+![Sysmon](https://img.shields.io/badge/Sysmon-E65100?style=for-the-badge)
+![VirusTotal](https://img.shields.io/badge/VirusTotal-394EFF?style=for-the-badge)
+![Windows](https://img.shields.io/badge/Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white)
+![Kali Linux](https://img.shields.io/badge/Kali_Linux-557C94?style=for-the-badge&logo=kalilinux&logoColor=white)
+![MITRE ATT&CK](https://img.shields.io/badge/MITRE_ATT%26CK-FF0000?style=for-the-badge)
 
-This lab focuses on **blue team operations**, simulating how analysts monitor endpoints behind a firewall, investigate alerts, and validate suspicious activity using Wazuh.
-
-
-## 🎯 Project Summary
-
-This project demonstrates deployment of a host-based detection system inside a controlled SOC network protected by a firewall.
-
-The environment was designed to simulate enterprise monitoring where endpoints generate security telemetry analyzed by a centralized detection platform.
-
-The goal was **defensive monitoring and investigation**, not penetration testing.
-
-
-## 📌 Project Scope
-
-This lab focuses on:
-
-- Endpoint monitoring and alert detection  
-- Firewall-controlled network segmentation  
-- Linux & Windows log visibility  
-- File Integrity Monitoring (FIM)
-- Threat Hunting (TH) 
-- Authentication event monitoring  
-- SOC investigation workflow understanding  
+A hands-on Wazuh deployment across Windows 10 and Linux endpoints with Sysmon integration, VirusTotal API active response pipeline, MITRE ATT&CK mapping, and false positive tuning. Every detection shown here was triggered by real activity in the lab.
 
 ---
 
-## 🏗️ Lab Architecture
+## 🖥️ Lab Environment
 
-### Network Flow
-<img width="1024" height="713" alt="Wazuh_lab_setup" src="https://github.com/user-attachments/assets/4f3bd58e-3a6b-48ef-82f7-7db1667ef7f6" />
-
-
-### Components
-
-**pfSense Firewall**
-- Controls internal SOC network traffic
-- Provides network segmentation
-- Simulates enterprise perimeter defense
-
-**Wazuh Server**
-- Centralized log collection
-- Alert correlation engine
-- Endpoint monitoring platform
-
-**Endpoints**
-- Windows VM generating security events
-- Linux systems producing authentication logs
-- Kali Linux used for activity simulation
-
-
-## ⚙️ Wazuh Implementation
-
-The Wazuh platform was deployed to monitor endpoint behavior and detect suspicious system activities.
-
-### Configured Features
-
-- Agent enrollment and monitoring
-- File Integrity Monitoring (FIM)
-- Threat Hunting (TH)
-- Authentication log analysis
-- Privilege escalation monitoring
-- Security event alerting
-
-Configuration tuning performed using:
-
-- `ossec.conf`
-- Agent configuration policies
-- Log source adjustments
-
-
-## 🧪 Activity Simulation & Detection Testing
-
-To validate detection visibility, multiple system activities were performed:
-
-- File creation and deletion events
-- Unauthorized file modification attempts
-- Linux sudo privilege escalation
-- Authentication attempts monitoring
-- Agent communication verification
-
-These actions generated alerts analyzed from an analyst perspective.
-
-
-## 🔎 SOC Investigation Approach
-
-Each alert was reviewed using a structured workflow:
-
-1. Identify triggered rule
-2. Review event source
-3. Validate user activity
-4. Analyze timestamps and behavior
-5. Determine normal vs suspicious activity
-6. Document findings
-
-This helped understand **why alerts exist**, not just how they appear.
-
-
-## 🧭 Detection Visibility Learned
-
-The lab helped demonstrate how:
-
-- Endpoint logs reveal attacker behavior
-- Privilege escalation attempts appear in telemetry
-- File integrity monitoring detects unauthorized changes
-- Authentication anomalies become investigation starting points
-
-
-## 🧠 SOC Analyst Skills Practiced
-
-- Endpoint detection monitoring
-- Alert triage and validation
-- Linux & Windows log investigation
-- Detection rule understanding
-- Security event correlation
-- Defensive analysis mindset
-
----
-## 📸 Lab Screenshots
-
-### 1️⃣. Active agents (Windows & Linux)
-Shows active Windows and Linux agents successfully connected to the Wazuh manager.
-  
-  <img width="1920" height="1079" alt="Screenshot 2026-02-10 111414" src="https://github.com/user-attachments/assets/91a57329-98d1-4a25-8e4a-e364a381e734" />
-
-### 2️⃣. Threat Hunting: Authentication, Privilege & File Activity
- shows correlated endpoint activity captured in the Threat Hunting view of Wazuh for a Kali Linux and Windows agent.
-
-Observed events include:
-- PAM login session opened and closed
-- Successful sudo execution to ROOT
-- File deletion detected via File Integrity Monitoring (syscheck)
-- Rootcheck (host-based anomaly detection) events
-- Agent start and stop events
-
-These events appear together because Wazuh correlates authentication, privilege escalation, and file system activity by agent and time window. This reflects how SOC analysts investigate real incidents by reviewing all related actions around a single endpoint rather than isolated event types.
-
-  
-  <img width="1920" height="1080" alt="Screenshot 2026-02-10 133155" src="https://github.com/user-attachments/assets/36d08b03-a837-440e-985f-c3287915dcc7" />
-  
-  <img width="1920" height="1080" alt="Screenshot 2026-02-10 131410" src="https://github.com/user-attachments/assets/033d3173-dbe0-47c2-9ede-c615bbb8e42e" />
-
-### 3️⃣. File Integrity Monitoring alerts
-Shows file creation, modification, and deletion events on Windows, highlighting OS behavior differences.
-
-  <img width="1920" height="1080" alt="Screenshot 2026-02-10 133116" src="https://github.com/user-attachments/assets/e52e8dbb-dbe4-4e9d-adb1-4b7914e24fd7" />
-  
-  <img width="1920" height="1080" alt="Screenshot 2026-02-10 131644" src="https://github.com/user-attachments/assets/2c4600d0-98f4-438b-8b72-2d7089248c37" />
-
+| Machine | Role |
+|---|---|
+| Ubuntu Server | Wazuh manager, log collection, active response host |
+| Windows 10 | Wazuh agent, Sysmon monitoring, endpoint detection |
+| Kali Linux | Wazuh agent, malware simulation, attack source |
 
 ---
 
-## 🧠 Key Takeaways
-
-- Learned how endpoint detection works inside a monitored SOC network rather than as a standalone tool.
-- Understood how firewall segmentation (pfSense) improves visibility and security monitoring.
-- Gained practical experience analyzing Linux and Windows security events from an analyst perspective.
-- Observed how attacker behavior appears through authentication logs, file changes, and privilege escalation events.
-- Developed alert triage skills by validating whether alerts represent normal activity or suspicious behavior.
-- Understood the importance of centralized logging for incident investigation and detection workflows.
-- Improved understanding of how SOC analysts investigate alerts step-by-step instead of relying only on tools.
-- Learned how detection rules help identify abnormal system behavior early in the attack lifecycle.
+## 📂 What Was Built and Detected
 
 ---
-🔗 **Navigation**  
-⬅️ [Back to Portfolio](https://github.com/rohithbaggu56-dot)
+
+### 🔴 VirusTotal API + Active Response Pipeline
+
+Configured Wazuh to automatically detect and delete malware using the VirusTotal API. When a file is dropped, Sysmon catches it, Wazuh sends the hash to VirusTotal, and if the verdict is malicious, remove-threat.sh deletes the file automatically.
+
+**ossec.conf — VirusTotal integration block configured on the Wazuh manager:**
+
+<img width="1911" height="1080" alt="ossec_file" src="https://github.com/user-attachments/assets/b8dccf4f-1bbd-41cc-addc-c015e51c92af" />
+
+
+**ossec.conf on Windows agent — Sysmon log source and active response command configured:**
+
+<img width="1920" height="1080" alt="Screenshot 2026-03-24 102236" src="https://github.com/user-attachments/assets/517571a6-c60d-4446-b0b9-7e326b6e6de8" />
+
+
+**ossec.conf — remove-threat command and active-response block wired to rule 87105:**
+
+<img width="1911" height="1080" alt="Screenshot 2026-03-28 104822" src="https://github.com/user-attachments/assets/3482d91a-e5cb-4817-b6d3-6d43fa2d8319" />
+
+
+**Wazuh alert showing VirusTotal returned 66/68 engine detections for the EICAR test file:**
+
+<img width="1911" height="1080" alt="Screenshot 2026-03-28 100558" src="https://github.com/user-attachments/assets/98d341a4-2293-411f-b16b-6c8df4ae42e7" />
+
+
+**VirusTotal website confirming the EICAR file verdict — 66 out of 68 engines flagged it:**
+
+<img width="1911" height="1080" alt="Screenshot 2026-03-28 100630" src="https://github.com/user-attachments/assets/ace91d55-9051-4152-9b83-7ab7b8b49fb2" />
+
+
+**Wazuh event log showing the full pipeline: file added, VirusTotal alert (rule 87105), active response triggered (rule 657), file deleted (rule 553):**
+
+<img width="1911" height="1080" alt="Screenshot 2026-03-28 110356" src="https://github.com/user-attachments/assets/cf91a77c-cf45-4eeb-993b-483f299f9975" />
+
+
+**MITRE ATT&CK events view confirming file deletion sequence — T1070.004 Defense Evasion, rule 553 firing:**
+
+ <img width="1911" height="1080" alt="Screenshot 2026-03-24 130258" src="https://github.com/user-attachments/assets/c9c435e4-af81-4bf5-90d9-6e07db020059" />
+
+
+- 📌 MITRE: `T1105` Ingress Tool Transfer · `T1070.004` File Deletion · `T1059` Command & Scripting Interpreter
+  <img width="1911" height="1080" alt="Screenshot 2026-03-24 130258" src="https://github.com/user-attachments/assets/3b6424f0-16e4-4d06-89fc-8c97f02c8b37" />
+
 ---
+
+### 🔴 Sysmon Integration & False Positive Tuning
+
+Deployed Sysmon on Windows 10 with a custom XML config. Wazuh was generating T1105 false positives from Microsoft Edge downloading filter list updates. Identified the pattern and wrote a local_rules.xml suppression rule.
+
+**Sysmon Event ID 11 captured in Windows Event Viewer — file creation detected with RuleName and process details:**
+
+<img width="1920" height="1080" alt="Screenshot 2026-03-24 095338" src="https://github.com/user-attachments/assets/d4be8176-a982-46a6-95d4-2bf6226eb9f1" />
+
+
+**MITRE ATT&CK document detail in Wazuh showing the Edge false positive — T1059.007 JavaScript, target file was an adblock snippet in Temp folder:**
+
+
+
+- Sysmon captured process creation (Event ID 1), network connections (Event ID 3), and file drops (Event ID 11)
+- The Edge false positive was firing because msedgewebview2.exe was downloading `adblock_snippet.js` to the Temp folder, which matched the T1105 pattern
+- Wrote a suppression rule in local_rules.xml to filter this specific process and path combination
+- Validated the fix by confirming Edge no longer triggered the alert while a real malware drop still fired correctly
+- 📌 MITRE: `T1105` Ingress Tool Transfer · `T1036` Masquerading
+
+---
+
+### 🔴 Threat Hunting Dashboard & MITRE ATT&CK Visibility
+
+**Wazuh Threat Hunting dashboard for Windows 10 agent — 844 total alerts, 14 high severity (Level 12+), top alert groups visible:**
+
+<img width="1911" height="1080" alt="Screenshot 2026-03-24 115830" src="https://github.com/user-attachments/assets/4194a33f-38ef-404d-8478-e9c9137e191b" />
+
+
+**Wazuh events list — PowerShell detections firing, rule 92205 (PowerShell created executable in Windows root folder) and rule 92021:**
+
+<img width="1911" height="1080" alt="Screenshot 2026-03-24 115914" src="https://github.com/user-attachments/assets/5b5ff763-d584-4c20-9f05-0b79f9e251f4" />
+
+
+**MITRE ATT&CK dashboard in Wazuh — tactic breakdown showing Impact, Privilege Escalation, Persistence, Defense Evasion, Execution, Lateral Movement, Command and Control, Discovery, Initial Access:**
+
+<img width="1911" height="1080" alt="Screenshot 2026-03-24 115958" src="https://github.com/user-attachments/assets/d0cc2307-4b45-4486-8ad5-1f159947441b" />
+
+
+- Reviewed top tactics and correlated them to specific rule IDs and alert descriptions
+- Used the MITRE ATT&CK framework tab to map detections to techniques across the Kill Chain
+- 📌 MITRE: `T1059` Command & Scripting Interpreter · `T1078` Valid Accounts · `T1087` Discovery
+
+---
+
+### 🔴 Authentication & File Integrity Monitoring
+
+Monitored Windows and Linux authentication events and file integrity changes across both endpoints.
+
+- Correlated Windows Event IDs 4625, 4624, and 4648 to detect failed logon sequences and flag lateral movement patterns
+- Monitored Linux auth.log for sudo escalation and PAM session events on the Kali agent
+- File Integrity Monitoring (FIM) detected file creation, modification, and deletion events on both Windows and Linux
+- 📌 MITRE: `T1078` Valid Accounts · `T1110` Brute Force · `T1565.001` Stored Data Manipulation
+
+---
+
+## 📁 Files in This Repo
+
+```
+Wazuh-SIEM-SOC-Hands-On-Lab/
+├── detection-rules/
+│   └── local_rules.xml        (false positive suppression rule)
+├── scripts/
+│   └── remove-threat.sh       (active response malware deletion script)
+└── config/
+    └── ossec.conf-snippets    (VirusTotal integration + active response blocks)
+```
+
+---
+
+⬅️ [Back to SOC Home Lab](https://github.com/rohithbaggu56-dot/Home-SOC-Lab-Detection-Log-Analysis) · [Back to Portfolio](https://github.com/rohithbaggu56-dot)
